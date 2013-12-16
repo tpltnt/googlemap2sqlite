@@ -8,7 +8,12 @@ if 2 != len(sys.argv):
     print("usage: " + str(sys.argv[0]) + " \"URL to google map\"")
     sys.exit(1)
 
-kmlrequest = urllib.request.urlopen(sys.argv[1] + '&output=kml')
-kmlstring = kmlrequest.read()
+try:
+    kmlrequest = urllib.request.urlopen(sys.argv[1] + '&output=kml')
+    kmlstring = kmlrequest.read()
+except ValueError:
+    print("an error while requesting the data")
+    sys.exit(2)
+
 root = etree.fromstring(kmlstring)
 print(root.tag)

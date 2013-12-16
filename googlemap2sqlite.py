@@ -16,4 +16,7 @@ except ValueError:
     sys.exit(2)
 
 root = etree.fromstring(kmlstring)
-print(root.tag)
+list_of_places = root.findall("./{http://earth.google.com/kml/2.2}Document/{http://earth.google.com/kml/2.2}Placemark")
+for place in list_of_places:
+    print(place.tag)
+

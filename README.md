@@ -10,3 +10,4 @@ references
   * [wikipedia](https://en.wikipedia.org/wiki/Keyhole_Markup_Language)
   * [Open Geospatial Consortium](http://www.opengeospatial.org/standards/kml/)
   * [Google Inc.](https://developers.google.com/kml/documentation/?csw=1)
+* [sqlite](http://sqlite.org/)

@@ -37,13 +37,12 @@ def extract_coordinates(placemark):
     :raises: TypeError
     """
 
-    if not isinstance(place, etree.Element):
+    if not isinstance(placemark, etree.Element):
         raise TypeError("given place not of type 'xml.etree.ElementTree.Element'")
 
-    coordinates = place.text.strip()
+    coordinates = placemark.text.strip()
     if -1 == coordinates.find('\n'):
-        return [float(x) for x in coordinates.split(',')]
-    print(coordinates)
+        return [[float(x) for x in coordinates.strip().split(',')]]
     return []
 
 

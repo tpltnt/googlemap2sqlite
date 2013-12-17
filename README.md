@@ -1,7 +1,7 @@
 googlemap2sqlite
 ================
 
-Dump a [Google map](https://en.wikipedia.org/wiki/Google_maps) into a [sqlite](http://sqlite.org/) database. The coordinates are expressed in decimal degrees following the World Geodetic System of 1984 (WGS84).
+Dump a [Google map](https://en.wikipedia.org/wiki/Google_maps) (KML 2.2) into a [sqlite](http://sqlite.org/) database. The coordinates are expressed in decimal degrees following the World Geodetic System of 1984 (WGS84).
 
 
 references

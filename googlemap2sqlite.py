@@ -27,25 +27,14 @@ def open_url(url):
     return etree.ElementTree(kmldata)
 
 
-def coordinates_str_to_triple(coordinates):
-    """
-    Convert coordinates string to triple.
-
-    :param coordinates: string of coordinates as extracted from the KML tag
-    :type coordinates: str
-    :raises: TypeError
-    """
-
-    if not isinstance(coordinates, str):
-        raise TypeError("given coordinates not of type 'str'")
-
-    return [float(x) for x in coordinates.split(',')]
-
-
-def extract_coordinates(place):
+def extract_coordinates(placemark):
     """
     Extract the coordinates and return an array of float objects [[long,lat,alt],...].
     One tripel of coordinates indicates a point, multiple enclose an area.
+
+    :param placemark: Placemark tag as extracted from KML data
+    :type placemark: xml.etree.ElementTree.Element
+    :raises: TypeError
     """
 
     if not isinstance(place, etree.Element):
@@ -53,7 +42,7 @@ def extract_coordinates(place):
 
     coordinates = place.text.strip()
     if -1 == coordinates.find('\n'):
-        return coordinates_str_to_triple(coordinates)
+        return [float(x) for x in coordinates.split(',')]
     print(coordinates)
     return []
 

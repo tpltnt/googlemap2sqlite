@@ -6,7 +6,7 @@ import socket                          # to handle socket exception
 import sys                             # for commandline arguments
 
 
-def open_url(self, url):
+def open_url(url):
     """
     Open URL and return ElementTree object.
     """
@@ -27,12 +27,31 @@ def open_url(self, url):
     return etree.ElementTree(kmldata)
 
 
-def extract_coordinates(self, place):
+def coordinates_str_to_triple(coordinates):
+    """
+    Convert coordinates string to triple.
+    """
+
+    if not isinstance(coordinates, str):
+        raise TypeError("given coordinates not of type 'str'")
+    pass
+
+
+def extract_coordinates(place):
     """
     Extract the coordinates and return an array of float objects [[long,lat,alt],...].
     One tripel of coordinates indicates a point, multiple enclose an area.
     """
-    pass
+
+    if not isinstance(place, etree.Element):
+        raise TypeError("given place not of type 'xml.etree.ElementTree.Element'")
+
+    coordinates = place.text.strip()
+    if -1 == coordinates.find('\n'):
+        return []
+    print(coordinates)
+    return []
+
 
 if 2 != len(sys.argv):
     print("usage: " + str(sys.argv[0]) + " \"URL to google map\"")
@@ -50,7 +69,6 @@ for place in list_of_places:
     print(name)
     # extract coordinates
     element = place.find(".//{http://earth.google.com/kml/2.2}coordinates")
-    coordinates = element.text.strip()
-    print(coordinates.find('\n'))
+    coordinates = extract_coordinates(element)
     print(coordinates)
 

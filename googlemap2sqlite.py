@@ -30,11 +30,16 @@ def open_url(url):
 def coordinates_str_to_triple(coordinates):
     """
     Convert coordinates string to triple.
+
+    :param coordinates: string of coordinates as extracted from the KML tag
+    :type coordinates: str
+    :raises: TypeError
     """
 
     if not isinstance(coordinates, str):
         raise TypeError("given coordinates not of type 'str'")
-    pass
+
+    return [float(x) for x in coordinates.split(',')]
 
 
 def extract_coordinates(place):
@@ -48,7 +53,7 @@ def extract_coordinates(place):
 
     coordinates = place.text.strip()
     if -1 == coordinates.find('\n'):
-        return []
+        return coordinates_str_to_triple(coordinates)
     print(coordinates)
     return []
 

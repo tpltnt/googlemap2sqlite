@@ -27,6 +27,13 @@ def open_url(self, url):
     return etree.ElementTree(kmldata)
 
 
+def extract_coordinates(self, place):
+    """
+    Extract the coordinates and return an array of float objects [[long,lat,alt],...].
+    One tripel of coordinates indicates a point, multiple enclose an area.
+    """
+    pass
+
 if 2 != len(sys.argv):
     print("usage: " + str(sys.argv[0]) + " \"URL to google map\"")
     sys.exit(1)
@@ -43,7 +50,7 @@ for place in list_of_places:
     print(name)
     # extract coordinates
     element = place.find(".//{http://earth.google.com/kml/2.2}coordinates")
-    print(element.__class__)
     coordinates = element.text.strip()
+    print(coordinates.find('\n'))
     print(coordinates)
 

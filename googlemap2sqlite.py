@@ -42,8 +42,16 @@ def extract_coordinates(placemark):
 
     coordinates = placemark.text.strip()
     if -1 == coordinates.find('\n'):
-        return [[float(x) for x in coordinates.strip().split(',')]]
-    return []
+        # convert each element into float
+        return [[float(x) for x in coordinates.split(',')]]
+    else:
+        data = []
+        # seperate triples
+        for triple in coordinates.split('\n'):
+            # convert each triple to float
+            data.append([float(x) for x in triple.strip().split(',')])
+        return data
+    return None # should never be returned
 
 
 if 2 != len(sys.argv):

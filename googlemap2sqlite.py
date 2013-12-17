@@ -72,6 +72,13 @@ for place in list_of_places:
     element = place.find("./{http://earth.google.com/kml/2.2}name")
     name = element.text.strip()
     print(name)
+    # extract description
+    element = place.find("./{http://earth.google.com/kml/2.2}description")
+    description = element.text
+    if None == description:
+        description = ""
+    description = description.strip()
+    print(description)
     # extract coordinates
     element = place.find(".//{http://earth.google.com/kml/2.2}coordinates")
     coordinates = extract_coordinates(element)

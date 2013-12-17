@@ -64,6 +64,10 @@ root = etree.parse(kmlfile)
 
 list_of_places = root.findall("./{http://earth.google.com/kml/2.2}Document/{http://earth.google.com/kml/2.2}Placemark")
 for place in list_of_places:
+    # extract ID (based on styleURL)
+    element = place.find("./{http://earth.google.com/kml/2.2}styleUrl")
+    place_id = element.text.strip().split('#style')[1]
+    print(place_id)
     # extract the name
     element = place.find("./{http://earth.google.com/kml/2.2}name")
     name = element.text.strip()

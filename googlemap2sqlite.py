@@ -5,22 +5,33 @@ import urllib.request                  # to open URLs
 import socket                          # to handle socket exception
 import sys                             # for commandline arguments
 
+
+def open_url(self, url):
+    """
+    Open URL and return ElementTree object.
+    """
+    if not isinstance(url,str):
+        return None
+    try:
+        kmlrequest = urllib.request.urlopen(url + '&output=kml')
+    except urllib.error.URLError:
+        print("URL error, maybe wrong?")
+        sys.exit(2)
+    try:
+        kmlstring = kmlrequest.read()
+    except ValueError:
+        print("an error while requesting the data")
+        sys.exit(3)
+
+    kmldata = etree.fromstring(kmlstring)
+    return etree.ElementTree(kmldata)
+
+
 if 2 != len(sys.argv):
     print("usage: " + str(sys.argv[0]) + " \"URL to google map\"")
     sys.exit(1)
 
-try:
-    kmlrequest = urllib.request.urlopen(sys.argv[1] + '&output=kml')
-except urllib.error.URLError:
-    print("URL error, maybe wrong?")
-    sys.exit(2)
-try:
-    kmlstring = kmlrequest.read()
-except ValueError:
-    print("an error while requesting the data")
-    sys.exit(3)
 
-# root = etree.fromstring(kmlstring)
 kmlfile = open("test.kml",'r')
 root = etree.parse(kmlfile)
 

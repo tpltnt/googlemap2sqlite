@@ -3,6 +3,7 @@
 import xml.etree.ElementTree as etree  # for XML parsing
 import urllib.request                  # to open URLs
 import socket                          # to handle socket exception
+import sqlite3                         # to work a sqlite database
 import sys                             # for commandline arguments
 
 
@@ -64,7 +65,7 @@ root = etree.parse(kmlfile)
 
 list_of_places = root.findall("./{http://earth.google.com/kml/2.2}Document/{http://earth.google.com/kml/2.2}Placemark")
 for place in list_of_places:
-    # extract ID (based on styleURL)
+    # extract ID (based on styleURL) -> own ID generation?
     element = place.find("./{http://earth.google.com/kml/2.2}styleUrl")
     place_id = element.text.strip().split('#style')[1]
     print(place_id)

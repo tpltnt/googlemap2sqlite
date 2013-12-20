@@ -70,12 +70,15 @@ db_cursor = db_connection.cursor()
 
 # create tables
 db_cursor.execute(
-'CREATE TABLE IF NOT EXISTS places(
-  id INTEGER PRIMARY KEY NOT NULL,
-  name TEXT NOT NULL,
-  description TEXT
+'''
+  CREATE TABLE IF NOT EXISTS places(
+    id INTEGER PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT
+  )
+'''
 )
-')
+db_connection.commit()
 
 for place in list_of_places:
     # extract ID (based on styleURL) -> own ID generation?

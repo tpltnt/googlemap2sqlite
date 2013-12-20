@@ -60,10 +60,14 @@ if 2 != len(sys.argv):
     sys.exit(1)
 
 
+# get all the map data
 kmlfile = open("test.kml",'r')
 root = etree.parse(kmlfile)
-
 list_of_places = root.findall("./{http://earth.google.com/kml/2.2}Document/{http://earth.google.com/kml/2.2}Placemark")
+# set up the database connection
+db_connection = sqlite3.connect('mapdata.db')
+db_cursor = db_connection.cursor()
+
 for place in list_of_places:
     # extract ID (based on styleURL) -> own ID generation?
     element = place.find("./{http://earth.google.com/kml/2.2}styleUrl")
@@ -85,3 +89,6 @@ for place in list_of_places:
     coordinates = extract_coordinates(element)
     print(coordinates)
 
+# final cleanup
+db_cursor.close()
+kmlfile.close()

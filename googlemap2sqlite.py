@@ -68,15 +68,38 @@ list_of_places = root.findall("./{http://earth.google.com/kml/2.2}Document/{http
 db_connection = sqlite3.connect('mapdata.db')
 db_cursor = db_connection.cursor()
 
+# determine values for the database tables
+max_name_len = 0
+max_desc_len = 0
+for place in list_of_places:
+    # extract the name
+    element = place.find("./{http://earth.google.com/kml/2.2}name")
+    name = element.text.strip()
+    # find maximum length
+    if len(name) > max_name_len:
+        max_name_len = len(name)
+    # extract description
+    element = place.find("./{http://earth.google.com/kml/2.2}description")
+    description = element.text
+    if None == description:
+        description = ""
+    description = description.strip()
+    # find maximum length
+    if len(description) > max_desc_len:
+        max_desc_len = len(description)
+
+print(max_name_len)
+print(max_desc_len)
+
 for place in list_of_places:
     # extract ID (based on styleURL) -> own ID generation?
     element = place.find("./{http://earth.google.com/kml/2.2}styleUrl")
     place_id = element.text.strip().split('#style')[1]
-    print(place_id)
+    #print(place_id)
     # extract the name
     element = place.find("./{http://earth.google.com/kml/2.2}name")
     name = element.text.strip()
-    print(name)
+    print(len(name))
     # extract description
     element = place.find("./{http://earth.google.com/kml/2.2}description")
     description = element.text

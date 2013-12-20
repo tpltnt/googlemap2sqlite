@@ -68,28 +68,14 @@ list_of_places = root.findall("./{http://earth.google.com/kml/2.2}Document/{http
 db_connection = sqlite3.connect('mapdata.db')
 db_cursor = db_connection.cursor()
 
-# determine values for the database tables
-max_name_len = 0
-max_desc_len = 0
-for place in list_of_places:
-    # extract the name
-    element = place.find("./{http://earth.google.com/kml/2.2}name")
-    name = element.text.strip()
-    # find maximum length
-    if len(name) > max_name_len:
-        max_name_len = len(name)
-    # extract description
-    element = place.find("./{http://earth.google.com/kml/2.2}description")
-    description = element.text
-    if None == description:
-        description = ""
-    description = description.strip()
-    # find maximum length
-    if len(description) > max_desc_len:
-        max_desc_len = len(description)
-
-print(max_name_len)
-print(max_desc_len)
+# create tables
+db_cursor.execute(
+'CREATE TABLE IF NOT EXISTS places(
+  id INTEGER PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  description TEXT
+)
+')
 
 for place in list_of_places:
     # extract ID (based on styleURL) -> own ID generation?

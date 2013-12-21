@@ -69,15 +69,21 @@ db_connection = sqlite3.connect('mapdata.db')
 db_cursor = db_connection.cursor()
 
 # create tables
-db_cursor.execute(
-'''
-  CREATE TABLE IF NOT EXISTS places(
-    id INTEGER PRIMARY KEY NOT NULL,
+db_cursor.execute('''
+  CREATE TABLE IF NOT EXISTS places (
+    pid INTEGER PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     description TEXT
-  )
-'''
-)
+  )''')
+db_cursor.execute('''
+  CREATE TABLE IF NOT EXISTS coordinates (
+    cid INTEGER PRIMARY KEY NOT NULL,
+    pid INTEGER NOT NULL,
+    longitude REAL NOT NULL,
+    latitude REAL NOT NULL,
+    altitude REAL
+  )''')
+
 db_connection.commit()
 
 for place in list_of_places:
@@ -88,7 +94,7 @@ for place in list_of_places:
     # extract the name
     element = place.find("./{http://earth.google.com/kml/2.2}name")
     name = element.text.strip()
-    print(len(name))
+    print(name)
     # extract description
     element = place.find("./{http://earth.google.com/kml/2.2}description")
     description = element.text

@@ -87,9 +87,6 @@ db_cursor.execute('''
 db_connection.commit()
 
 for place in list_of_places:
-    # extract ID (based on styleURL) -> own ID generation?
-    element = place.find("./{http://earth.google.com/kml/2.2}styleUrl")
-    place_id = element.text.strip().split('#style')[1]
     # extract the name
     element = place.find("./{http://earth.google.com/kml/2.2}name")
     name = element.text.strip()
@@ -100,15 +97,14 @@ for place in list_of_places:
         description = ""
     description = description.strip()
     # dump it into the places table
-    data = (int(place_id), name, description)
+    data = (None, name, description)
     db_cursor.execute('INSERT INTO places VALUES (?,?,?)', data)
     # extract coordinates
     element = place.find(".//{http://earth.google.com/kml/2.2}coordinates")
     coordinates = extract_coordinates(element)
     for triple in coordinates:
-        # todo: primary key
-        data = (int(place_id), triple[0], triple[1], triple[2])
-        db_cursor.execute('INSERT INTO coordinates VALUES (?,?,?,?)', data)
+        data = (None, int(place_id), triple[0], triple[1], triple[2])
+        db_cursor.execute('INSERT INTO coordinates VALUES (?,?,?,?,?)', data)
     print(coordinates)
 
 # final cleanup

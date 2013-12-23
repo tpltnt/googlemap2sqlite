@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 
+"""
+This script dumps coordinates and metadata from a Google map 
+into a sqlite database. Mostly useful for data liberation 
+and automated processing.
+
+:author: tpltnt
+:license: AGPLv3
+"""
 import xml.etree.ElementTree as etree  # for XML parsing
 import urllib.request                  # to open URLs
 import socket                          # to handle socket exception
@@ -10,9 +18,14 @@ import sys                             # for commandline arguments
 def open_url(url):
     """
     Open URL and return ElementTree object.
+
+    :param url: URL to open
+    :type url: str
+    :raises: TypeError
     """
     if not isinstance(url,str):
-        return None
+        raise TypeError("given URL not of type 'str'")
+
     try:
         kmlrequest = urllib.request.urlopen(url + '&output=kml')
     except urllib.error.URLError:
@@ -109,7 +122,6 @@ for place in list_of_places:
     for triple in coordinates:
         data = (None, int(place_id), triple[0], triple[1], triple[2])
         db_cursor.execute('INSERT INTO coordinates VALUES (?,?,?,?,?)', data)
-    print(coordinates)
 
 # final cleanup
 db_connection.commit()

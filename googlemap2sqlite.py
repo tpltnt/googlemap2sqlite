@@ -74,8 +74,9 @@ if 2 != len(sys.argv):
 
 
 # get all the map data
-kmlfile = open("test.kml",'r')
-root = etree.parse(kmlfile)
+#kmlfile = open("test.kml",'r')
+#root = etree.parse(kmlfile)
+root = open_url(sys.argv[1])
 list_of_places = root.findall("./{http://earth.google.com/kml/2.2}Document/{http://earth.google.com/kml/2.2}Placemark")
 # set up the database connection
 db_connection = sqlite3.connect('mapdata.db')
@@ -126,4 +127,4 @@ for place in list_of_places:
 # final cleanup
 db_connection.commit()
 db_cursor.close()
-kmlfile.close()
+#kmlfile.close()

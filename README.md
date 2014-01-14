@@ -2,7 +2,7 @@ googlemap2sqlite
 ================
 
 Dump coordinates and descriptions from a [Google map](https://en.wikipedia.org/wiki/Google_maps) (KML 2.2) into a [sqlite](http://sqlite.org/) database. The coordinates are expressed in decimal degrees following the World Geodetic System of 1984 (WGS84). This scraper is mostly useful for data liberation and automated processing.
-It creates two tables: places and coordinates. The SQL statements for their creation are
+It creates two tables: places and coordinates. The [SQL](https://en.wikipedia.org/wiki/SQL) statements for their creation are
 ```
 CREATE TABLE IF NOT EXISTS places (
   pid INTEGER PRIMARY KEY NOT NULL,

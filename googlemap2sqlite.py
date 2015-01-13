@@ -74,8 +74,6 @@ if 2 != len(sys.argv):
 
 
 # get all the map data
-#kmlfile = open("test.kml",'r')
-#root = etree.parse(kmlfile)
 root = open_url(sys.argv[1])
 list_of_places = root.findall("./{http://earth.google.com/kml/2.2}Document/{http://earth.google.com/kml/2.2}Placemark")
 # set up the database connection
@@ -127,4 +125,3 @@ for place in list_of_places:
 # final cleanup
 db_connection.commit()
 db_cursor.close()
-#kmlfile.close()
